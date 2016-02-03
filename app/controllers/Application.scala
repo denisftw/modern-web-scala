@@ -6,7 +6,12 @@ import play.api.mvc._
 class Application extends Controller {
 
   def index = Action {
-    Ok(views.html.index())
+    import java.util.Date
+    import java.text.SimpleDateFormat
+
+    val date = new Date()
+    val dateStr = new SimpleDateFormat().format(date)
+    Ok(views.html.index(dateStr))
   }
 
 }
