@@ -12,7 +12,9 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
-  specs2 % Test
+  specs2 % Test,
+  "com.softwaremill.macwire" %% "macros" % "2.2.0" % "provided",
+  "com.softwaremill.macwire" %% "util" % "2.2.0"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

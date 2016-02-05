@@ -10,10 +10,8 @@ import play.api.Play.current
 import services.{WeatherService, SunService}
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class Application extends Controller {
-
-  val sunService = new SunService
-  val weatherService = new WeatherService
+class Application(sunService: SunService,
+    weatherService: WeatherService) extends Controller {
 
   def index = Action.async {
     val lat = -33.8830
