@@ -1,7 +1,12 @@
+import actors.StatsActor
+import actors.StatsActor.Ping
+import akka.actor.Props
 import controllers.{Application, Assets}
+import filters.StatsFilter
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.libs.ws.ning.NingWSComponents
+import play.api.mvc.{Filter, EssentialFilter}
 import play.api.routing.Router
 import router.Routes
 import com.softwaremill.macwire._
@@ -24,6 +29,12 @@ trait AppComponents extends BuiltInComponents with NingWSComponents {
 
   lazy val sunService = wire[SunService]
   lazy val weatherService = wire[WeatherService]
+  lazy val statsFilter: Filter = wire[StatsFilter]
+  override lazy val httpFilters = Seq(statsFilter)
+
+  lazy val statsActor = actorSystem.actorOf(
+    Props(wire[StatsActor]), StatsActor.name)
+
 
   applicationLifecycle.addStopHook { () =>
     Logger.info("The app is about to stop")
@@ -32,5 +43,6 @@ trait AppComponents extends BuiltInComponents with NingWSComponents {
 
   val onStart = {
     Logger.info("The app is about to start")
+    statsActor ! Ping
   }
 }
