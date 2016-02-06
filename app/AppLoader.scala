@@ -7,6 +7,8 @@ import router.Routes
 import com.softwaremill.macwire._
 import services.{WeatherService, SunService}
 
+import scala.concurrent.Future
+
 class AppApplicationLoader extends ApplicationLoader {
   def load(context: Context) = {
     Logger.configure(context.environment)
@@ -22,4 +24,13 @@ trait AppComponents extends BuiltInComponents with NingWSComponents {
 
   lazy val sunService = wire[SunService]
   lazy val weatherService = wire[WeatherService]
+
+  applicationLifecycle.addStopHook { () =>
+    Logger.info("The app is about to stop")
+    Future.successful(Unit)
+  }
+
+  val onStart = {
+    Logger.info("The app is about to start")
+  }
 }
