@@ -1,4 +1,4 @@
-@(sunInfo: model.SunInfo, temperature: Double, requests: Int)
+@()
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,10 +7,7 @@
     </head>
     <body>
         <h1>Hello Play</h1>
-
-        <div>Sunrise time: @sunInfo.sunrise</div>
-        <div>Sunset time: @sunInfo.sunset</div>
-        <div>Current temperature: @temperature</div>
-        <div>Requests: @requests</div>
+        <div id="reactView"></div>
     </body>
+    <script src="@routes.Assets.versioned("compiled/bundle.js")" ></script>
 </html>

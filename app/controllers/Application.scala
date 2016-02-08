@@ -5,9 +5,10 @@ import java.util.concurrent.TimeUnit
 import actors.StatsActor
 import akka.actor.ActorSystem
 import akka.util.Timeout
-import model.SunInfo
+import model.{CombinedData, SunInfo}
 import org.joda.time.{DateTimeZone, DateTime}
 import org.joda.time.format.DateTimeFormat
+import play.api.libs.json.Json
 import play.api.libs.ws.WS
 import play.api.mvc._
 import akka.pattern.ask
@@ -20,7 +21,11 @@ class Application(sunService: SunService,
     weatherService: WeatherService,
     actorSystem: ActorSystem) extends Controller {
 
-  def index = Action.async {
+  def index = Action {
+    Ok(views.html.index())
+  }
+
+  def data = Action.async {
     val lat = -33.8830
     val lon = 151.2167
     val sunInfoF = sunService.getSunInfo(lat, lon)
@@ -35,7 +40,7 @@ class Application(sunService: SunService,
       temperature <- temperatureF
       requests <- requestsF
     } yield {
-      Ok(views.html.index(sunInfo, temperature, requests))
+      Ok(Json.toJson(CombinedData(sunInfo, temperature, requests)))
     }
   }
 }
