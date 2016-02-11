@@ -5,11 +5,14 @@ import controllers.{Application, Assets}
 import filters.StatsFilter
 import play.api.ApplicationLoader.Context
 import play.api._
+import play.api.db.{HikariCPComponents, DBComponents}
+import play.api.db.evolutions.{DynamicEvolutions, EvolutionsComponents}
 import play.api.libs.ws.ning.NingWSComponents
 import play.api.mvc.{Filter, EssentialFilter}
 import play.api.routing.Router
 import router.Routes
 import com.softwaremill.macwire._
+import scalikejdbc.config.DBs
 import services.{WeatherService, SunService}
 
 import scala.concurrent.Future
@@ -21,7 +24,8 @@ class AppApplicationLoader extends ApplicationLoader {
   }
 }
 
-trait AppComponents extends BuiltInComponents with NingWSComponents {
+trait AppComponents extends BuiltInComponents with NingWSComponents
+ with EvolutionsComponents with DBComponents with HikariCPComponents {
   lazy val assets: Assets = wire[Assets]
   lazy val prefix: String = "/"
   lazy val router: Router = wire[Routes]
@@ -32,17 +36,22 @@ trait AppComponents extends BuiltInComponents with NingWSComponents {
   lazy val statsFilter: Filter = wire[StatsFilter]
   override lazy val httpFilters = Seq(statsFilter)
 
+  lazy val dynamicEvolutions = new DynamicEvolutions
+
   lazy val statsActor = actorSystem.actorOf(
     Props(wire[StatsActor]), StatsActor.name)
 
 
   applicationLifecycle.addStopHook { () =>
     Logger.info("The app is about to stop")
+    DBs.closeAll()
     Future.successful(Unit)
   }
 
   val onStart = {
     Logger.info("The app is about to start")
+    DBs.setupAll()
+    applicationEvolutions
     statsActor ! Ping
   }
 }
