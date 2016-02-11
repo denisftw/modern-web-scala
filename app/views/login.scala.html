@@ -1,0 +1,26 @@
+@()
+<html lang="en">
+    <head>
+        <title>Login page</title>
+        <link rel="stylesheet"
+          href="@routes.Assets.versioned("compiled/styles.css")">
+        <link rel="shortcut icon" type="image/png"
+          href="@routes.Assets.versioned("images/favicon.png")">
+    </head>
+    <body>
+        <form method="post" action="/login">
+            <fieldset style="margin: 10px;">
+                <legend>Login</legend>
+                <p>
+                    <label for="username">Username:</label>
+                    <input id="username" type="text" name="username"  />
+                </p>
+                <p>
+                    <label for="password">Password:</label>
+                    <input id="password" type="password" name="password"  />
+                </p>
+                <button type="submit" class="button--sm">Login</button>
+            </fieldset>
+        </form>
+    </body>
+</html>

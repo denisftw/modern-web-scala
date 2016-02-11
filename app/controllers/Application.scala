@@ -43,4 +43,8 @@ class Application(sunService: SunService,
       Ok(Json.toJson(CombinedData(sunInfo, temperature, requests)))
     }
   }
+
+  def login = Action {
+    Ok(views.html.login())
+  }
 }
