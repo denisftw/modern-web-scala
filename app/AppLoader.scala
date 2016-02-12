@@ -14,7 +14,7 @@ import play.api.routing.Router
 import router.Routes
 import com.softwaremill.macwire._
 import scalikejdbc.config.DBs
-import services.{AuthService, WeatherService, SunService}
+import services.{UserAuthAction, AuthService, WeatherService, SunService}
 
 import scala.concurrent.Future
 
@@ -39,6 +39,8 @@ trait AppComponents extends BuiltInComponents with NingWSComponents
   override lazy val httpFilters = Seq(statsFilter)
 
   lazy val authService = new AuthService(defaultCacheApi)
+
+  lazy val userAuthAction = wire[UserAuthAction]
 
   lazy val dynamicEvolutions = new DynamicEvolutions
 

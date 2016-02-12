@@ -14,15 +14,26 @@ import play.api.mvc._
 import akka.pattern.ask
 
 import play.api.Play.current
-import services.{WeatherService, SunService}
+import services.{UserAuthAction, AuthService, WeatherService, SunService}
 import scala.concurrent.ExecutionContext.Implicits.global
+
+import play.api.data.Form
+import play.api.data.Forms._
+
+case class UserLoginData(username: String, password: String)
 
 class Application(sunService: SunService,
     weatherService: WeatherService,
-    actorSystem: ActorSystem) extends Controller {
+    actorSystem: ActorSystem,
+    authService: AuthService,
+    userAuthAction: UserAuthAction) extends Controller {
 
   def index = Action {
     Ok(views.html.index())
+  }
+
+  def restricted = userAuthAction { userAuthRequest =>
+    Ok(views.html.restricted(userAuthRequest.user))
   }
 
   def data = Action.async {
@@ -45,6 +56,28 @@ class Application(sunService: SunService,
   }
 
   def login = Action {
-    Ok(views.html.login())
+    Ok(views.html.login(None))
+  }
+
+  def doLogin = Action(parse.anyContent) { implicit request =>
+    userDataForm.bindFromRequest.fold(
+      formWithErrors => Ok(views.html.login(Some("Wrong data"))),
+      userData => {
+        val maybeCookie = authService.login(userData.username, userData.password)
+        maybeCookie match {
+          case Some(cookie) =>
+            Redirect("/").withCookies(cookie)
+          case None =>
+            Ok(views.html.login(Some("Login failed")))
+        }
+      }
+    )
+  }
+
+  val userDataForm = Form {
+    mapping(
+      "username" -> nonEmptyText,
+      "password" -> nonEmptyText
+    )(UserLoginData.apply)(UserLoginData.unapply)
   }
 }

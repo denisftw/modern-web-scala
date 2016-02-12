@@ -8,7 +8,7 @@ import model.User
 import org.apache.commons.codec.binary.Base64
 import org.mindrot.jbcrypt.BCrypt
 import play.api.cache.CacheApi
-import play.api.mvc.Cookie
+import play.api.mvc.{RequestHeader, Cookie}
 import scalikejdbc._
 
 import scala.concurrent.duration.Duration
@@ -24,6 +24,15 @@ class AuthService(cacheApi: CacheApi) {
       cookie <- Some(createCookie(user))
     } yield {
       cookie
+    }
+  }
+
+  def checkCookie(header: RequestHeader): Option[User] = {
+    for {
+      cookie <- header.cookies.get(cookieHeader)
+      user <- cacheApi.get[User](cookie.value)
+    } yield {
+      user
     }
   }
 
