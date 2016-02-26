@@ -11,9 +11,14 @@ pipelineStages := Seq(digest)
 libraryDependencies ++= Seq(
   jdbc,
   cache,
+  evolutions,
   ws,
   "org.scaldi" %% "scaldi" % "0.5.7",
   "org.scaldi" %% "scaldi-play" % "0.5.13",
+  "org.scalikejdbc" %% "scalikejdbc"        % "2.3.5",
+  "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.5",
+  "com.h2database"  %  "h2"                % "1.4.191",
+  "ch.qos.logback"  %  "logback-classic"   % "1.1.3",
   specs2 % Test
 )
 

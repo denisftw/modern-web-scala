@@ -1,25 +1,24 @@
 package modules
 
 import scaldi.Module
-import play.api.Logger
 import controllers._
+import scalikejdbc.config.DBs
+import services.{GreetingService, UserService}
 
 
 class MainModule extends Module {
   binding to new Application
   binding toNonLazy new Initializer initWith(_.init()) destroyWith(_.stop())
   bind[GreetingService] to new GreetingService
-}
-
-class GreetingService {
-  def greet(name: String): String = s"Hello $name"
+  binding to new UserService
 }
 
 class Initializer {
   def init() = {
-    Logger.info("Starting...")
+    DBs.setupAll()
   }
   def stop() = {
-    Logger.info("Stopping...")
+    DBs.closeAll()
   }
 }
+
