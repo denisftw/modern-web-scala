@@ -12,6 +12,8 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
+  "org.scaldi" %% "scaldi" % "0.5.7",
+  "org.scaldi" %% "scaldi-play" % "0.5.13",
   specs2 % Test
 )
 
