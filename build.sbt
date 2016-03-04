@@ -14,7 +14,7 @@ libraryDependencies ++= Seq(
   evolutions,
   ws,
   "org.scaldi" %% "scaldi" % "0.5.7",
-  "org.scaldi" %% "scaldi-play" % "0.5.13",
+  "org.scaldi" %% "scaldi-play" % "0.5.13-play-2.5.0-M2",
   "org.scalikejdbc" %% "scalikejdbc"        % "2.3.5",
   "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.5",
   "com.h2database"  %  "h2"                % "1.4.191",
