@@ -23,6 +23,7 @@ class Application(implicit inj: Injector) extends Controller with Injectable {
   }
 
   def index = Action {
+    val users = userService.allUsers
     Ok(views.html.index())
   }
 
