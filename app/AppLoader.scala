@@ -8,7 +8,7 @@ import play.api._
 import play.api.cache.EhCacheComponents
 import play.api.db.{HikariCPComponents, DBComponents}
 import play.api.db.evolutions.{DynamicEvolutions, EvolutionsComponents}
-import play.api.libs.ws.ning.NingWSComponents
+import play.api.libs.ws.ahc.AhcWSComponents
 import play.api.mvc.{Filter, EssentialFilter}
 import play.api.routing.Router
 import router.Routes
@@ -20,12 +20,14 @@ import scala.concurrent.Future
 
 class AppApplicationLoader extends ApplicationLoader {
   def load(context: Context) = {
-    Logger.configure(context.environment)
+    LoggerConfigurator(context.environment.classLoader).foreach { configurator =>
+      configurator.configure(context.environment)
+    }
     (new BuiltInComponentsFromContext(context) with AppComponents).application
   }
 }
 
-trait AppComponents extends BuiltInComponents with NingWSComponents
+trait AppComponents extends BuiltInComponents with AhcWSComponents
  with EvolutionsComponents with DBComponents with HikariCPComponents
  with EhCacheComponents {
   lazy val assets: Assets = wire[Assets]
