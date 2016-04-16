@@ -4,7 +4,7 @@ This is the companion code repository for the [Modern Web Development with Scala
 
 ## Staring point
 
-The [`starting-point`](https://github.com/denisftw/modern-web-scala/tree/starting-point) tag marks the initial state of a model application that is used throughout the book for demonstrating different aspects of Web development. In particular the book illustrates the following:
+The [`starting-point`](https://github.com/denisftw/modern-web-scala/releases/tag/starting-point-play-2.5.0) tag marks the initial state of a model application that is used throughout the book for demonstrating different aspects of Web development. In particular the book illustrates the following:
 
 * Querying remote services with the `WSClient`
 * Using [MacWire](https://github.com/adamw/macwire) for injecting dependencies
