@@ -39,7 +39,6 @@
   "dependencies": {
     "axios": "^0.14.0",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "whatwg-fetch": "^0.11.0"
+    "react-dom": "^0.14.7"
   }
 }
