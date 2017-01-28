@@ -5,10 +5,10 @@ class SunWeatherComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sunrise: undefined,
-      sunset: undefined,
-      temperature: undefined,
-      requests: undefined
+      sunrise: null,
+      sunset: null,
+      temperature: null,
+      requests: null
     };
   }
   componentDidMount = () => {
@@ -21,7 +21,7 @@ class SunWeatherComponent extends React.Component {
         requests: json.requests
       });
     })
-  }
+  };
   render = () => {
     return <table>
       <tbody>
