@@ -1,10 +1,9 @@
 package services
 
-import play.api.libs.ws.{WSClient, WS}
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
 
-import play.api.Play.current
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
