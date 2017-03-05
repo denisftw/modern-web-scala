@@ -17,4 +17,4 @@ The [`starting-point`](https://github.com/denisftw/modern-web-scala/releases/tag
 
 ## Versions used
 
-The code uses Play 2.5 and Scala 2.11.8 along with sbt 0.13.11.
+The code uses Play 2.6 and Scala 2.11.8 along with sbt 0.13.13.
