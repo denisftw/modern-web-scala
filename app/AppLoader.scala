@@ -32,7 +32,7 @@ class AppComponents(context: Context) extends BuiltInComponentsFromContext(conte
   with AhcWSComponents with EvolutionsComponents with DBComponents
   with HikariCPComponents with EhCacheComponents with AssetsComponents {
 
-  lazy val controllerComponents = wire[DefaultControllerComponents]
+  override lazy val controllerComponents = wire[DefaultControllerComponents]
   lazy val prefix: String = "/"
   lazy val router: Router = wire[Routes]
   lazy val applicationController = wire[Application]
