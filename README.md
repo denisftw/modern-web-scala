@@ -4,7 +4,7 @@ This is the companion code repository for the [Modern Web Development with Scala
 
 ## Staring point
 
-The template built with the [`denisftw/play-scala-web-starter.g8`](https://github.com/denisftw/play-scala-web-starter.g8) Giter8 template tag marks the initial state of a model application that is used throughout the book for demonstrating different aspects of Web development. In particular the book illustrates the following:
+The application built using [`denisftw/play-scala-web-starter.g8`](https://github.com/denisftw/play-scala-web-starter.g8) Giter8 template marks the initial state of a model application that is used throughout the book for demonstrating different aspects of Web development. In particular the book illustrates the following:
 
 * Querying remote services with the `WSClient`
 * Using [MacWire](https://github.com/adamw/macwire) for injecting dependencies
