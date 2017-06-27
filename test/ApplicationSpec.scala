@@ -1,5 +1,6 @@
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
+import java.time.format.DateTimeFormatter
+import java.time.{Instant, ZoneId, ZonedDateTime}
+
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatest.concurrent._
@@ -19,8 +20,9 @@ class ApplicationSpec extends PlaySpec with MockitoSugar with ScalaFutures {
 
   "DateTimeFormat" must {
     "return 1970 as the beginning of epoch" in {
-      val beginning = new DateTime(0)
-      val formattedYear = DateTimeFormat.forPattern("YYYY").print(beginning)
+      val beginning = ZonedDateTime.ofInstant(Instant.ofEpochSecond(0),
+        ZoneId.systemDefault())
+      val formattedYear = beginning.format(DateTimeFormatter.ofPattern("YYYY"))
       formattedYear mustBe "1970"
     }
   }

@@ -4,7 +4,7 @@ This is the companion code repository for the [Modern Web Development with Scala
 
 ## Staring point
 
-The [`starting-point`](https://github.com/denisftw/modern-web-scala/releases/tag/starting-point-play-2.5.0) tag marks the initial state of a model application that is used throughout the book for demonstrating different aspects of Web development. In particular the book illustrates the following:
+The template built with the [`denisftw/play-scala-web-starter.g8`](https://github.com/denisftw/play-scala-web-starter.g8) Giter8 template tag marks the initial state of a model application that is used throughout the book for demonstrating different aspects of Web development. In particular the book illustrates the following:
 
 * Querying remote services with the `WSClient`
 * Using [MacWire](https://github.com/adamw/macwire) for injecting dependencies
@@ -17,4 +17,4 @@ The [`starting-point`](https://github.com/denisftw/modern-web-scala/releases/tag
 
 ## Versions used
 
-The code uses Play 2.6 and Scala 2.11.8 along with sbt 0.13.13.
+The code uses Play 2.6 and Scala 2.12.2 along with sbt 0.13.15.
