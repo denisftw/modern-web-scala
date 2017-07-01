@@ -54,7 +54,7 @@ class Application(components: ControllerComponents, sunService: SunService,
     Ok(views.html.login(None))
   }
 
-  def doLogin = Action(parse.anyContent) { implicit request =>
+  def doLogin = Action { implicit request =>
     userDataForm.bindFromRequest.fold(
       formWithErrors => Ok(views.html.login(Some("Wrong data"))),
       userData => {
