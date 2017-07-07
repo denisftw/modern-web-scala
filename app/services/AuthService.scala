@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit
 import model.User
 import org.apache.commons.codec.binary.Base64
 import org.mindrot.jbcrypt.BCrypt
-import play.api.cache.CacheApi
-import play.api.mvc.{RequestHeader, Cookie}
+import play.api.cache.SyncCacheApi
+import play.api.mvc.{Cookie, RequestHeader}
 import scalikejdbc._
 
 import scala.concurrent.duration.Duration
@@ -16,7 +16,7 @@ import scala.concurrent.duration.Duration
 /**
   * Created by denis on 2/11/16.
   */
-class AuthService(cacheApi: CacheApi) {
+class AuthService(cacheApi: SyncCacheApi) {
 
   def login(userCode: String, password: String): Option[Cookie] = {
     for {

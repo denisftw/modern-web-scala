@@ -1,12 +1,13 @@
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
-import org.scalatest.mock.MockitoSugar
+import java.time.format.DateTimeFormatter
+import java.time.{Instant, ZoneId, ZonedDateTime}
+
+import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatest.concurrent._
-
 import org.mockito.Mockito._
 import play.api.libs.json.Json
-import play.api.libs.ws.{WSResponse, WSRequest, WSClient}
+import play.api.libs.ws.ahc.AhcWSRequest
+import play.api.libs.ws.{WSClient, WSResponse}
 import services.SunService
 
 import scala.concurrent.Future
@@ -19,8 +20,9 @@ class ApplicationSpec extends PlaySpec with MockitoSugar with ScalaFutures {
 
   "DateTimeFormat" must {
     "return 1970 as the beginning of epoch" in {
-      val beginning = new DateTime(0)
-      val formattedYear = DateTimeFormat.forPattern("YYYY").print(beginning)
+      val beginning = ZonedDateTime.ofInstant(Instant.ofEpochSecond(0),
+        ZoneId.systemDefault())
+      val formattedYear = beginning.format(DateTimeFormatter.ofPattern("YYYY"))
       formattedYear mustBe "1970"
     }
   }
@@ -28,7 +30,7 @@ class ApplicationSpec extends PlaySpec with MockitoSugar with ScalaFutures {
   "SunService" must {
     "retrieve correct sunset and sunrise information" in {
       val wsClientStub = mock[WSClient]
-      val wsRequestStub = mock[WSRequest]
+      val wsRequestStub = mock[AhcWSRequest]
       val wsResponseStub = mock[WSResponse]
 
       val expectedResponse = """

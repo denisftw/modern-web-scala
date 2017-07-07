@@ -5,28 +5,23 @@ import java.util.concurrent.TimeUnit
 import actors.StatsActor
 import akka.actor.ActorSystem
 import akka.util.Timeout
-import model.{CombinedData, SunInfo}
-import org.joda.time.{DateTimeZone, DateTime}
-import org.joda.time.format.DateTimeFormat
+import model.CombinedData
 import play.api.libs.json.Json
-import play.api.libs.ws.WS
 import play.api.mvc._
 import akka.pattern.ask
+import services._
 
-import play.api.Play.current
-import services.{UserAuthAction, AuthService, WeatherService, SunService}
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import play.api.data.Form
 import play.api.data.Forms._
 
 case class UserLoginData(username: String, password: String)
 
-class Application(sunService: SunService,
+class Application(components: ControllerComponents, sunService: SunService,
     weatherService: WeatherService,
     actorSystem: ActorSystem,
     authService: AuthService,
-    userAuthAction: UserAuthAction) extends Controller {
+    userAuthAction: UserAuthAction) extends AbstractController(components) {
 
   def index = Action {
     Ok(views.html.index())
@@ -59,7 +54,7 @@ class Application(sunService: SunService,
     Ok(views.html.login(None))
   }
 
-  def doLogin = Action(parse.anyContent) { implicit request =>
+  def doLogin = Action { implicit request =>
     userDataForm.bindFromRequest.fold(
       formWithErrors => Ok(views.html.login(Some("Wrong data"))),
       userData => {
