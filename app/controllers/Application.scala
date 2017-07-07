@@ -27,7 +27,7 @@ class Application(components: ControllerComponents, sunService: SunService,
     Ok(views.html.index())
   }
 
-  def restricted = userAuthAction { userAuthRequest: UserAuthRequest[AnyContent] =>
+  def restricted = userAuthAction { userAuthRequest =>
     Ok(views.html.restricted(userAuthRequest.user))
   }
 
