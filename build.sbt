@@ -19,6 +19,6 @@ libraryDependencies ++= Seq(
   "org.scalikejdbc" %% "scalikejdbc-config"  % "3.0.0",
   "ch.qos.logback"  %  "logback-classic" % "1.2.3",
   "de.svenkubiak" % "jBCrypt" % "0.4.1",
-  "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0" % "test",
+  "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
   "org.mockito" % "mockito-core" % "2.7.22" % "test"
 )
