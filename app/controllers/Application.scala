@@ -6,6 +6,7 @@ import actors.StatsActor
 import akka.actor.ActorSystem
 import akka.util.Timeout
 import model.CombinedData
+import controllers.Assets.Asset
 import play.api.libs.json.Json
 import play.api.mvc._
 import akka.pattern.ask
@@ -17,7 +18,8 @@ import play.api.data.Forms._
 
 case class UserLoginData(username: String, password: String)
 
-class Application(components: ControllerComponents, sunService: SunService,
+class Application(components: ControllerComponents, assets: Assets,
+    sunService: SunService,
     weatherService: WeatherService,
     actorSystem: ActorSystem,
     authService: AuthService,
@@ -26,6 +28,8 @@ class Application(components: ControllerComponents, sunService: SunService,
   def index = Action {
     Ok(views.html.index())
   }
+
+  def versioned(path: String, file: Asset) = assets.versioned(path, file)
 
   def restricted = userAuthAction { userAuthRequest =>
     Ok(views.html.restricted(userAuthRequest.user))
