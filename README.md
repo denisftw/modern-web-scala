@@ -17,4 +17,4 @@ The application built using [`denisftw/play-scala-web-starter.g8`](https://githu
 
 ## Versions used
 
-The code uses Play 2.6 and Scala 2.12.2 along with sbt 0.13.15.
+The code uses Play 2.6 and Scala 2.12 along with sbt 1.2.
