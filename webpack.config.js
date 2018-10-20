@@ -1,16 +1,39 @@
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   entry: './ui/entry.js',
-  output: { path: __dirname + '/public/compiled', filename: 'bundle.js' },
+  output: {path: path.resolve(__dirname, 'public/compiled'), filename: 'bundle.js'},
   module: {
-    loaders: [
-      { test: /\.jsx?$/, loader: 'babel-loader', include: /ui/, query: { presets: ['es2015', 'stage-0', 'react'] } },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract( "style", "css!sass") }
+    rules: [
+      {
+        test: /\.jsx?$/,
+        include: /ui/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
+      }
     ]
   },
   plugins: [
-    new ExtractTextPlugin("styles.css")
-  ]
-}
+    new MiniCssExtractPlugin({ filename: "styles.css" })
+  ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true
+      })
+    ]
+  }
+};

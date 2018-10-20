@@ -4,8 +4,8 @@
   "description": "The frontend part of a sample Web app written for 'Modern Web Development with Scala'",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack --watch",
-    "prod": "webpack -p"
+    "watch": "webpack --mode development --watch",
+    "prod": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -18,23 +18,25 @@
   },
   "homepage": "https://github.com/denisftw/modern-web-scala#readme",
   "devDependencies": {
-    "babel-core": "^6.16.0",
-    "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.16.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-0": "^6.16.0",
-    "css-loader": "^0.23.1",
-    "exports-loader": "^0.6.2",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "imports-loader": "^0.6.5",
-    "node-sass": "^3.4.2",
-    "sass-loader": "^3.1.2",
-    "style-loader": "^0.13.0",
-    "webpack": "^1.12.13"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "mini-css-extract-plugin": "^0.4.1",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "css-loader": "^1.0.0",
+    "exports-loader": "^0.7.0",
+    "imports-loader": "^0.8.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8"
   },
   "dependencies": {
     "axios": "^0.14.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   }
 }
