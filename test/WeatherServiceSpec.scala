@@ -1,5 +1,3 @@
-
-
 import com.softwaremill.macwire._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Seconds, Span}

@@ -12,7 +12,7 @@ import play.api.mvc._
 import router.Routes
 import play.api.routing.Router
 import com.softwaremill.macwire._
-import play.api.cache.ehcache.EhCacheComponents
+import play.api.cache.caffeine.CaffeineCacheComponents
 import _root_.controllers.AssetsComponents
 import scalikejdbc.config.DBs
 import services.{AuthService, SunService, UserAuthAction, WeatherService}
@@ -30,7 +30,9 @@ class AppApplicationLoader extends ApplicationLoader {
 
 class AppComponents(context: Context) extends BuiltInComponentsFromContext(context)
   with AhcWSComponents with EvolutionsComponents with DBComponents
-  with HikariCPComponents with EhCacheComponents with AssetsComponents {
+  with HikariCPComponents with CaffeineCacheComponents with AssetsComponents {
+
+  private val log = Logger(this.getClass)
 
   override lazy val controllerComponents = wire[DefaultControllerComponents]
   lazy val prefix: String = "/"
@@ -53,13 +55,13 @@ class AppComponents(context: Context) extends BuiltInComponentsFromContext(conte
 
 
   applicationLifecycle.addStopHook { () =>
-    Logger.info("The app is about to stop")
+    log.info("The app is about to stop")
     DBs.closeAll()
     Future.successful(Unit)
   }
 
   val onStart = {
-    Logger.info("The app is about to start")
+    log.info("The app is about to start")
     DBs.setupAll()
     applicationEvolutions
     statsActor ! Ping
