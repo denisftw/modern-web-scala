@@ -13,7 +13,7 @@ The application built using [`denisftw/play-scala-web-starter.g8`](https://githu
 * Working with JSON and using Play Forms API
 * Using [Akka](http://akka.io/) Actors
 * Using HTTP filters and action composition in Play
-* Testing with [ScalaTest](http://http://www.scalatest.org/) and [Mockito](http://mockito.org/)
+* Testing with [ScalaTest](http://http://www.scalatest.org/) and [ScalaMock](https://scalamock.org/)
 
 ## Versions used
 
