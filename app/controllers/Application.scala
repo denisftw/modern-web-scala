@@ -59,7 +59,7 @@ class Application(components: ControllerComponents, assets: Assets,
   }
 
   def doLogin = Action { implicit request =>
-    userDataForm.bindFromRequest.fold(
+    userDataForm.bindFromRequest().fold(
       formWithErrors => Ok(views.html.login(Some("Wrong data"))),
       userData => {
         val maybeCookie = authService.login(userData.username, userData.password)

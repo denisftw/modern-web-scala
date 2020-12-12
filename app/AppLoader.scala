@@ -57,7 +57,7 @@ class AppComponents(context: Context) extends BuiltInComponentsFromContext(conte
   applicationLifecycle.addStopHook { () =>
     log.info("The app is about to stop")
     DBs.closeAll()
-    Future.successful(Unit)
+    Future.successful(())
   }
 
   val onStart = {

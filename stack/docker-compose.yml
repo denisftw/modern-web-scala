@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  postgresql:
+    image: postgres:12.2
+    container_name: modern-web-scala-pg
+    restart: always
+    environment:
+      POSTGRES_USER: scalauser
+      POSTGRES_PASSWORD: scalapass
+      POSTGRES_DB: scaladb
+      PGDATA: /pgdata
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+    ports:
+      - "5432:5432"
