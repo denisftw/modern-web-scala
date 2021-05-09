@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/denisftw/modern-web-scala/issues"
   },
-  "homepage": "https://github.com/denisftw/modern-web-scala#readme",
+  "homepage": "http://appliedscala.com/",
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
-    "http-server": "^0.12.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

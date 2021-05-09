@@ -1,15 +1,9 @@
 package controllers
 
-import java.util.concurrent.TimeUnit
-
-import actors.StatsActor
-import akka.actor.ActorSystem
-import akka.util.Timeout
 import model.CombinedData
 import controllers.Assets.Asset
 import play.api.libs.json.Json
 import play.api.mvc._
-import akka.pattern.ask
 import services._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -19,11 +13,10 @@ import play.api.data.Forms._
 case class UserLoginData(username: String, password: String)
 
 class Application(components: ControllerComponents, assets: Assets,
-    sunService: SunService,
-    weatherService: WeatherService,
-    actorSystem: ActorSystem,
-    authService: AuthService,
-    userAuthAction: UserAuthAction) extends AbstractController(components) {
+    sunService: SunService, weatherService: WeatherService,
+    statsService: StatsService, authService: AuthService,
+    userAuthAction: UserAuthAction)
+    extends AbstractController(components) {
 
   def index = Action {
     Ok(views.html.index())
@@ -40,10 +33,7 @@ class Application(components: ControllerComponents, assets: Assets,
     val lon = 151.2167
     val sunInfoF = sunService.getSunInfo(lat, lon)
     val temperatureF = weatherService.getTemperature(lat, lon)
-
-    implicit val timeout = Timeout(5, TimeUnit.SECONDS)
-    val requestsF = (actorSystem.actorSelection(StatsActor.path) ?
-      StatsActor.GetStats).mapTo[Int]
+    val requestsF = statsService.getRequestCount
 
     for {
       sunInfo <- sunInfoF
@@ -59,21 +49,24 @@ class Application(components: ControllerComponents, assets: Assets,
   }
 
   def doLogin = Action { implicit request =>
-    userDataForm.bindFromRequest().fold(
-      formWithErrors => Ok(views.html.login(Some("Wrong data"))),
-      userData => {
-        val maybeCookie = authService.login(userData.username, userData.password)
-        maybeCookie match {
-          case Some(cookie) =>
-            Redirect("/").withCookies(cookie)
-          case None =>
-            Ok(views.html.login(Some("Login failed")))
+    userDataForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Ok(views.html.login(Some("Wrong data"))),
+        userData => {
+          val maybeCookie =
+            authService.login(userData.username, userData.password)
+          maybeCookie match {
+            case Some(cookie) =>
+              Redirect("/").withCookies(cookie)
+            case None =>
+              Ok(views.html.login(Some("Login failed")))
+          }
         }
-      }
-    )
+      )
   }
 
-  val userDataForm = Form {
+  private val userDataForm = Form {
     mapping(
       "username" -> nonEmptyText,
       "password" -> nonEmptyText
